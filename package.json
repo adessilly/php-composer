@@ -1,0 +1,13 @@
+{
+  "name": "adessilly-php-composer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "tag": "docker tag adessilly/php-composer:latest adessilly/php-composer:`cat version.txt`",
+    "build": "docker build -t adessilly/php-composer:latest .",
+    "push": "npm run build && npm run tag && docker push --all-tags adessilly/php-composer"
+  },
+  "author": "",
+  "license": "ISC"
+}
