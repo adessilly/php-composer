@@ -17,10 +17,10 @@ services:
     image: mysql:5.7
     restart: unless-stopped
     environment:
-      MYSQL_DATABASE: laravelDB
-      MYSQL_ROOT_PASSWORD: adminroot
-      MYSQL_PASSWORD: user01
-      MYSQL_USER: user01
+      MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+      MYSQL_DATABASE: '${DB_DATABASE}'
+      MYSQL_USER: '${DB_USERNAME}'
+      MYSQL_PASSWORD: '${DB_PASSWORD}'
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
     volumes:
@@ -43,6 +43,15 @@ services:
     volumes:
       - ./:/var/www
       - ./docker/nginx:/etc/nginx/conf.d/
+
+  composer:
+    restart: 'no'
+    image: composer
+    depends_on:
+      - db
+    command: install --ignore-platform-reqs
+    volumes:
+      - ./:/app
   ````
   
 Then you can generate whatever composer project like Laravel with :
