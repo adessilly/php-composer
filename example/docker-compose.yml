@@ -9,7 +9,7 @@ services:
       - ./:/var/www
 
   db:
-    image: mysql:5.7
+    image: mariadb:latest
     container_name: laravel-db
     restart: unless-stopped
     environment:
@@ -23,7 +23,7 @@ services:
       - ./docker/db:/docker-entrypoint-initdb.d
 
   phpmyadmin:
-    image: phpmyadmin/phpmyadmin
+    image: phpmyadmin:latest
     depends_on:
       - db
     links:
