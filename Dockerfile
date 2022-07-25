@@ -43,6 +43,9 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j$(nproc) gd
 
+RUN pecl install redis
+RUN apt-get install -y libzip-dev zip && docker-php-ext-install zip
+
 # Set working directory
 WORKDIR /var/www
 
