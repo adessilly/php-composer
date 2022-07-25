@@ -10,7 +10,7 @@
     "push-arm": "npm run build && npm run tag-arm && docker push --all-tags adessilly/php-composer",
     "push-amd64": "npm run build && npm run tag-amd64 && docker push --all-tags adessilly/php-composer",
     "merge-manifest-version": "docker manifest create adessilly/php-composer:`cat version.txt` adessilly/php-composer:`cat version.txt`-arm adessilly/php-composer:`cat version.txt`-amd64 && docker manifest annotate adessilly/php-composer:`cat version.txt` adessilly/php-composer:`cat version.txt`-arm --arch arm64 && docker manifest push adessilly/php-composer:`cat version.txt`",
-    "merge-manifest-latest": "docker manifest create adessilly/php-composer:latest adessilly/php-composer:`cat version.txt`-arm adessilly/php-composer:`cat version.txt`-amd64 && docker manifest annotate php-composer:latest adessilly/php-composer:`cat version.txt`-arm --arch arm64 && docker manifest push adessilly/php-composer:latest"
+    "merge-manifest-latest": "docker manifest create adessilly/php-composer:latest adessilly/php-composer:`cat version.txt`-arm adessilly/php-composer:`cat version.txt`-amd64 && docker manifest annotate adessilly/php-composer:latest adessilly/php-composer:`cat version.txt`-arm --arch arm && docker manifest push adessilly/php-composer:latest"
   },
   "author": "",
   "license": "ISC"
