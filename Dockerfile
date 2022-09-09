@@ -1,11 +1,24 @@
 FROM php:8.1.2-fpm
 
+
+# -------------------------------------------------------------
+# CONFIG
+# -------------------------------------------------------------
 # Arguments defined in docker-compose.yml
 ARG user=defaultuser
 ARG uid=1000
+# Create system user to run Composer and Artisan Commands
+RUN useradd -G www-data,root -u $uid -d /home/$user $user
+RUN mkdir -p /home/$user/.composer && \
+    chown -R $user:$user /home/$user
+# Fichier de version
+ADD package.json .
+# -------------------------------------------------------------
 
-ADD version.txt .
 
+# -------------------------------------------------------------
+# PHP + Composer
+# -------------------------------------------------------------
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
     git \
@@ -25,11 +38,6 @@ RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
 # Get latest Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Create system user to run Composer and Artisan Commands
-RUN useradd -G www-data,root -u $uid -d /home/$user $user
-RUN mkdir -p /home/$user/.composer && \
-    chown -R $user:$user /home/$user
-
 # Install imagick
 RUN apt-get update && apt-get install -y \
     imagemagick libmagickwand-dev --no-install-recommends \
@@ -48,5 +56,5 @@ RUN apt-get install -y libzip-dev zip && docker-php-ext-install zip
 
 # Set working directory
 WORKDIR /var/www
-
 USER $user
+# -------------------------------------------------------------

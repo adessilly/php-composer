@@ -58,23 +58,8 @@ Then you can generate whatever composer project like Laravel with :
 - `docker-compose up`
 - `docker-compose exec app composer create-project laravel/laravel my-proj`
 
-## Manifest architecture merge : 
-# PUSH FIRST a version for each architecture : -arm and -amd64
-docker manifest create adessilly/php-composer:0.2.0 adessilly/php-composer:0.2.0-arm adessilly/php-composer:0.2.0-amd64
-docker manifest annotate adessilly/php-composer:0.2.0 adessilly/php-composer:0.2.0-arm --arch arm64
-docker manifest push adessilly/php-composer:0.2.0
-
-docker manifest create adessilly/php-composer:latest adessilly/php-composer:0.2.0-arm adessilly/php-composer:0.2.0-amd64
-docker manifest annotate adessilly/php-composer:latest adessilly/php-composer:0.2.0-arm --arch arm
-docker manifest push adessilly/php-composer:latest
+## Local build
+docker build -t adessilly/php-composer:latest -t adessilly/php-composer:$npm_package_version .
 
 ## Deployment
-- Goto amd64 CPU
-npm run push-amd64
-
-- Goto arm CPU
-npm run push-arm
-
-- Merge the manifest (whatever platform)
-npm run merge-manifest-version
-npm run merge-manifest-latest
+docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v8 -t adessilly/php-composer:latest -t adessilly/php-composer:$npm_package_version . --push
