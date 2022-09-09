@@ -12,6 +12,8 @@ services:
     working_dir: /var/www/
     volumes:
       - ./:/var/www
+    ports:
+      - "8888:8888"
 
   db:
     image: mysql:5.7
@@ -34,24 +36,6 @@ services:
       - db
     ports:
       - "8889:80"
-
-  nginx:
-    image: nginx:alpine
-    restart: unless-stopped
-    ports:
-      - 8888:80
-    volumes:
-      - ./:/var/www
-      - ./docker/nginx:/etc/nginx/conf.d/
-
-  composer:
-    restart: 'no'
-    image: composer
-    depends_on:
-      - db
-    command: install --ignore-platform-reqs
-    volumes:
-      - ./:/app
   ````
   
 Then you can generate whatever composer project like Laravel with :
