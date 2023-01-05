@@ -1,11 +1,11 @@
 {
   "name": "adessilly-php-composer",
-  "version": "2.0.6",
+  "version": "2.0.6-mysqli",
   "description": "",
   "main": "index.js",
   "scripts": {
     "docker:deploy": "docker buildx build --platform linux/amd64,linux/arm64,linux/arm/v7,linux/arm/v8 -t adessilly/php-composer:latest -t adessilly/php-composer:$npm_package_version . --push",
-    "docker:build": "docker build -t adessilly/php-composer:latest -t adessilly/php-composer:$npm_package_version . --load"
+    "docker:build": "docker build -t adessilly/php-composer:latest -t adessilly/php-composer:$npm_package_version ."
   },
   "author": "",
   "license": "ISC"
